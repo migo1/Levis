@@ -25,5 +25,7 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 Route::resource('dashboard', 'DashboardController');
+Route::resource('clients', 'ClientController');
+Route::resource('transactions', 'TransactionController');
 
 

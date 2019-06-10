@@ -20,7 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+  <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom mb-2">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -81,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
 
               <li class="nav-item">
-                <a href="#" class="nav-link">
+              <a href="{{ route('clients.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-briefcase"></i>
                   <p>
                     Clients          
@@ -112,6 +112,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+          <a href="{{ route('transactions.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-concierge-bell"></i> 
+                <p>
+                  Transactions                
+                </p>
+              </a>
+            </li>
 
           <li class="nav-item">
             <a href="#" class="nav-link">
