@@ -1,9 +1,6 @@
 
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
+
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -69,8 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+
                <li class="nav-item">
                <a href="{{ route('dashboard.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -88,6 +84,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                  <a href="{{ route('transactions.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-concierge-bell"></i> 
+                        <p>
+                          Transactions                
+                        </p>
+                      </a>
+                    </li>
+
+              <li class="nav-item">
+                  <a href="{{ route('files.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-file-alt"></i> 
+                        <p>
+                          Files                
+                        </p>
+                      </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ url('/calendar')}}" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-check"></i> 
+                              <p>
+                              Calendar                
+                              </p>
+                            </a>
+                          </li>
 
           <li class="nav-item has-treeview ">
             <a href="#" class="nav-link ">
@@ -112,15 +135,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
-
-          <li class="nav-item">
-          <a href="{{ route('transactions.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-concierge-bell"></i> 
-                <p>
-                  Transactions                
-                </p>
-              </a>
-            </li>
 
           <li class="nav-item">
             <a href="#" class="nav-link">

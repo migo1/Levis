@@ -25,4 +25,14 @@ class Client extends Model
 //	{
 //		return 'uuid';
 //	}
+
+public function files() {
+  return $this->hasMany('App\File');
+}
+
+public function transactions()
+{
+    return $this->belongsToMany('App\Tansaction', 'transaction_client');
+}
+
 }

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Client;
-use App\Transaction;
 use App\File;
 
-class ClientController extends Controller
+class FileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,12 +17,10 @@ class ClientController extends Controller
     {
         $this->middleware('auth');
     }
-
-
     public function index()
     {
-        $clients = Client::orderBy('created_at','desc')->paginate(5);
-        return view('client.index',compact('clients'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $files = File::orderBy('created_at','desc')->paginate(5);
+        return view('file.index',compact('files'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -34,8 +30,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        
-        return view('client.create');
+        //
     }
 
     /**
@@ -46,9 +41,29 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        Client::create($request->all());
-
-        return redirect()->route('clients.index');
+        $file = new File;
+        while (true)
+        {
+            try
+            {
+                
+                $file->transaction_id = $request->input('transaction_id');
+                $file->court_day = $request->input('court_day');
+                $file->description = $request->input('description');
+                $file->client_id = $request->input('client_id');
+                $file->reference  = rand(100000000,1000000000);
+                $client_id = $file->client_id;
+                $transaction_id = $file->transaction_id;
+                $file->save();
+                //  We could save now we break out of the loop
+                break;
+            }
+            catch (Exception $e)
+            {
+                //  Could not save, try it again
+            }
+        }
+        return redirect()->route('clients.show',$client_id);
     }
 
     /**
@@ -59,9 +74,7 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        $client = Client::find($id);
-        $transactions = Transaction::all();
-        return view ('client.show',compact('client','transactions'));
+
     }
 
     /**
@@ -72,7 +85,7 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        return view('client.edit');
+        //
     }
 
     /**

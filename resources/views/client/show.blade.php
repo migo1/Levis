@@ -16,20 +16,20 @@
                        alt="User profile picture">
                 </div>
   
-                <h3 class="profile-username text-center">{{$clients->name}}</h3>
+                <h3 class="profile-username text-center">{{$client->name}}</h3>
   
-            <p class="text-muted text-center">{{$clients->email}}</p>
+            <p class="text-muted text-center">{{$client->email}}</p>
   
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
-                  <b>Client since:</b> <a class="float-right">{{$clients->created_at->diffForHumans()}}</a>
+                  <b>Client since:</b> <a class="float-right">{{$client->created_at->diffForHumans()}}</a>
                   </li>
                   <li class="list-group-item">
-                    <b>Contact:</b> <a class="float-right">{{$clients->mobile_no}}</a>
+                    <b>Contact:</b> <a class="float-right">{{$client->mobile_no}}</a>
                   </li>
                   <li class="list-group-item">
                       <strong><i class="fa fa-map-marker mr-1"></i> Location</strong>
-                      <p class="text-muted">Malibu, California</p>
+                      <p class="text-muted">Nairobi, Kenya</p>
                   </li>
                 </ul>
 
@@ -37,8 +37,6 @@
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-  
-            <!-- About Me Box -->
 
             <!-- /.card -->
           </div>
@@ -47,8 +45,8 @@
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link" href="#create_file" data-toggle="tab">Create File</a></li>
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Create File</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
@@ -56,149 +54,78 @@
 
                   <div class="tab-pane" id="timeline">
                     <!-- The timeline -->
-                    <ul class="timeline timeline-inverse">
-                      <!-- timeline time label -->
-                      <li class="time-label">
-                        <span class="bg-danger">
-                          10 Feb. 2014
-                        </span>
-                      </li>
-                      <!-- /.timeline-label -->
-                      <!-- timeline item -->
-                      <li>
-                        <i class="fa fa-envelope bg-primary"></i>
-  
-                        <div class="timeline-item">
-                          <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-  
-                          <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-  
-                          <div class="timeline-body">
-                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                            quora plaxo ideeli hulu weebly balihoo...
-                          </div>
-                          <div class="timeline-footer">
-                            <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                          </div>
-                        </div>
-                      </li>
-                      <!-- END timeline item -->
-                      <!-- timeline item -->
-                      <li>
-                        <i class="fa fa-user bg-info"></i>
-  
-                        <div class="timeline-item">
-                          <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-  
-                          <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                          </h3>
-                        </div>
-                      </li>
-                      <!-- END timeline item -->
-                      <!-- timeline item -->
-                      <li>
-                        <i class="fa fa-comments bg-warning"></i>
-  
-                        <div class="timeline-item">
-                          <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-  
-                          <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-  
-                          <div class="timeline-body">
-                            Take me to your leader!
-                            Switzerland is small and neutral!
-                            We are more like Germany, ambitious and misunderstood!
-                          </div>
-                          <div class="timeline-footer">
-                            <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                          </div>
-                        </div>
-                      </li>
-                      <!-- END timeline item -->
-                      <!-- timeline time label -->
-                      <li class="time-label">
-                        <span class="bg-success">
-                          3 Jan. 2014
-                        </span>
-                      </li>
-                      <!-- /.timeline-label -->
-                      <!-- timeline item -->
-                      <li>
-                        <i class="fa fa-camera bg-purple"></i>
-  
-                        <div class="timeline-item">
-                          <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-  
-                          <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-  
-                          <div class="timeline-body">
-                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                          </div>
-                        </div>
-                      </li>
-                      <!-- END timeline item -->
-                      <li>
-                        <i class="fa fa-clock-o bg-gray"></i>
-                      </li>
-                    </ul>
+                    <div class="row ">
+        <div class="col-12">
+          <div class="card mt-2">
+            <div class="card-header">
+              <h3 class="card-title">{{ $client->name}}'s Files<a class="btn btn-success btn-flat btn-sm m-0 float-right" href="{{ route('clients.create')}}">Add New Client</a></h3>
+      
+      
+            </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover">
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>reference</th>
+            <th>Type</th>
+            <th>Action</th>
+          </tr>
+          @foreach ($client->files as $file)
+          <tr>
+            <td>{{ $file->court_day }}</td>
+          <td>{{ $file->description}}</td>
+          <td>{{ $file->reference}}</td>
+          <td>{{ $file->transaction->name}}</td>
+
+            <td>
+                <a class="btn btn-primary btn-flat btn-sm" href="#">Edit</a>
+                 {!! Form::open(['method' => 'DELETE','style'=>'display:inline']) !!}
+                     {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-flat btn-sm']) !!}
+                 {!! Form::close() !!}
+            </td>
+          </tr>
+          @endforeach
+        </table>
+       {{-- {{$files->links()}}--}}
+      </div>
+    
+    
+    </div>
+    <!-- /.card -->
+    </div>
+    </div><!-- /.row -->
                   </div>
                   <!-- /.tab-pane -->
   
-                  <div class="tab-pane" id="settings">
-                    <form class="form-horizontal">
-                      <div class="form-group">
-                        <label for="inputName" class="col-sm-2 control-label">Name</label>
-  
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputName" placeholder="Name">
+                  <div class="tab-pane" id="create_file">
+                  <form method="POST" action="{{ route('files.store')}}">
+                        {{ csrf_field() }}
+                        <label class=" control-label ml-0 mb-0">Transactions</label><br>
+                        <div class="form-group">
+                            <select name="transaction_id" class="form-control">
+                                    @foreach ($transactions as $transaction)
+                                <option value="{{$transaction->id}}">{{$transaction->name}}</option>                                   
+                                    @endforeach
+                                </select>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-  
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputName2" class="col-sm-2 control-label">Name</label>
-  
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-  
-                        <div class="col-sm-10">
-                          <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-  
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                            </label>
+                                      
+                          <div class="form-group">
+                            <label for="exampleInputPassword1" class="control-label">Date</label>
+                            <input type="text" class="form-control" name="court_day"  >
                           </div>
+                      <div class="form-group">
+                        <label for="inputExperience" class="control-label">Description</label>
+  
+                        <div class="">
+                          <textarea class="form-control" id="inputExperience" name="description" placeholder="Description"></textarea>
                         </div>
                       </div>
+                    <input type="hidden" name="client_id" value="{{$client->id}}">
+                      <input type="hidden" name="reference">
                       <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger">Submit</button>
+                        <div class="col-sm-offset-2">
+                          <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                       </div>
                     </form>
@@ -213,6 +140,6 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
-      </div><!-
+      </div>
 
 @endsection
