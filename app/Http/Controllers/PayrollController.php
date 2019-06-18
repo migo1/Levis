@@ -3,29 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\File;
-use DB;
 
-class DashboardController extends Controller
+class PayrollController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-
     public function index()
     {
-
-        $todays_case = File::whereDate('court_day',DB::raw('CURDATE()'))->paginate(5);
-
-        return view('dashboard.index',compact('todays_case'))->with('i', (request()->input('page', 1) - 1) * 5);
+        //
     }
 
     /**
