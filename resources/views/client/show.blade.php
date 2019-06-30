@@ -4,6 +4,7 @@
 @section('content')
     
 <div class="container-fluid">
+<a class="btn btn-info btn-flat  mb-2" href="{{ route('clients.index')}}"><i class="fas fa-hand-point-left fa-lg mr-2"></i>Clients</a>
         <div class="row">
           <div class="col-md-3">
   
@@ -42,24 +43,16 @@
           </div>
           <!-- /.col -->
           <div class="col-md-9">
-            <div class="card">
-              <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link" href="#create_file" data-toggle="tab">Create File</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                </ul>
-              </div><!-- /.card-header -->
-              <div class="card-body">
-                <div class="tab-content">
 
-                  <div class="tab-pane" id="timeline">
-                    <!-- The timeline -->
                     <div class="row ">
         <div class="col-12">
           <div class="card mt-2">
             <div class="card-header">
-              <h3 class="card-title">{{ $client->name}}'s Files<a class="btn btn-success btn-flat btn-sm m-0 float-right" href="{{ route('clients.create')}}">Add New Client</a></h3>
-      
+              <h3 class="card-title">{{ $client->name}}'s Files
+                  <button type="button" class="btn btn-success btn-flat btn-sm m-0 float-right" data-toggle="modal" data-target="#create_file">
+                      Add New File
+                    </button>
+              </h3>
       
             </div>
     <div class="card-body table-responsive p-0">
@@ -79,10 +72,21 @@
           <td>{{ $file->transaction->name}}</td>
 
             <td>
-                <a class="btn btn-primary btn-flat btn-sm" href="#">Edit</a>
-                 {!! Form::open(['method' => 'DELETE','style'=>'display:inline']) !!}
+            <button class="btn btn-primary btn-flat btn-sm" 
+
+            data-myflid="{{ $file->id }}" data-mytrid="{{ $file->transaction}}" data-mycourtday="{{ $file->court_day }}"
+            data-mydescription="{{ $file->description}}" data-myclid="{{ $file->client_id}}" data-myreference="{{ $file->reference}}"
+
+            data-toggle="modal" data-target="#edit_file">
+              Edit</button>
+              <button class="btn btn-danger btn-sm btn-flat"
+              data-myflid="{{ $file->id }}"
+              data-toggle="modal" data-target="#delete_file">
+                Delete
+              </button>
+                {{-- {!! Form::open(['method' => 'DELETE','route' => ['files.destroy', $file->id],'style'=>'display:inline']) !!}
                      {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-flat btn-sm']) !!}
-                 {!! Form::close() !!}
+                 {!! Form::close() !!}--}}
             </td>
           </tr>
           @endforeach
@@ -95,51 +99,128 @@
     <!-- /.card -->
     </div>
     </div><!-- /.row -->
-                  </div>
-                  <!-- /.tab-pane -->
-  
-                  <div class="tab-pane" id="create_file">
-                  <form method="POST" action="{{ route('files.store')}}">
-                        {{ csrf_field() }}
-                        <label class=" control-label ml-0 mb-0">Transactions</label><br>
-                        <div class="form-group">
-                            <select name="transaction_id" class="form-control">
-                                    @foreach ($transactions as $transaction)
-                                <option value="{{$transaction->id}}">{{$transaction->name}}</option>                                   
-                                    @endforeach
-                                </select>
-                        </div>
-                                      
-                          <div class="form-group">
-                            <label for="exampleInputPassword1" class="control-label">Date</label>
-                            <input type="text" class="form-control" name="court_day"  >
-                          </div>
-                      <div class="form-group">
-                        <label for="inputExperience" class="control-label">Description</label>
-  
-                        <div class="">
-                          <textarea class="form-control" id="inputExperience" name="description" placeholder="Description"></textarea>
-                        </div>
-                      </div>
-                    <input type="hidden" name="client_id" value="{{$client->id}}">
-                      <input type="hidden" name="reference">
-                      <div class="form-group">
-                        <div class="col-sm-offset-2">
-                          <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <!-- /.tab-pane -->
-                </div>
-                <!-- /.tab-content -->
-              </div><!-- /.card-body -->
-            </div>
-            <!-- /.nav-tabs-custom -->
+
           </div>
           <!-- /.col -->
         </div>
         <!-- /.row -->
       </div>
 
+
+<!-- Modal create_file-->
+<div class="modal fade" id="create_file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create File</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="form-horizontal" method="POST" action="{{ route('files.store')}}">
+        <div class="modal-body">
+          @csrf
+          @include('client.create_file')
+        </div>
+       
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm btn-flat" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary btn-sm btn-flat">Create</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal edit_file-->
+  <div class="modal fade" id="edit_file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit File</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form class="form-horizontal" method="POST" action="{{ route('files.update','test')}}">
+            {{method_field('patch')}}
+          <div class="modal-body">
+          <input type="hidden" name="file_id" id="file_id" value="">
+            @csrf
+            @include('client.file_edit')
+          </div>
+         
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal edit_file-->
+  <div class="modal fade" id="delete_file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center" id="exampleModalLabel">Delete File</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form class="form-horizontal" method="POST" action="{{ route('files.destroy','test')}}">
+            {{method_field('delete')}}
+            @csrf
+
+          <div class="modal-body">
+          <p class="text-center">
+            Are you sure you want to delete this file?
+          </p>
+
+          <input type="hidden" name="file_id" id="file_id" value="">
+
+          </div>
+         
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-sm btn-flat" data-dismiss="modal">No, Cancel</button>
+            <button type="submit" class="btn btn-danger btn-sm btn-flat">Yes, Delete</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        $('#edit_file').on('show.bs.modal', function (event) {
+      
+        var button = $(event.relatedTarget) 
+        var file_id = button.data('myflid')
+        var transaction_id = button.data('mytrid')
+        var court_day = button.data('mycourtday') 
+        var description = button.data('mydescription')
+        var client_id = button.data('myclid')
+        var reference = button.data('myreference')
+       
+        var modal = $(this)
+        modal.find('.modal-body #file_id').val(file_id)
+        modal.find('.modal-body #transaction_id').val(transaction_id)
+        modal.find('.modal-body #court_day').val(court_day)
+        modal.find('.modal-body #description').val(description)
+        modal.find('.modal-body #client_id').val(client_id)
+         modal.find('.modal-body #reference').val(reference)
+      })
+        </script>
+
+<script>
+    $('#delete_file').on('show.bs.modal', function (event) {
+  
+    var button = $(event.relatedTarget) 
+    var file_id = button.data('myflid')
+   
+    var modal = $(this)
+    modal.find('.modal-body #file_id').val(file_id)
+  })
+    </script>
+  
 @endsection

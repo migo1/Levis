@@ -66,7 +66,8 @@ class TransactionController extends Controller
      */
     public function edit($id)
     {
-        return view('transaction.edit');
+        $transaction = Transaction::find($id);
+        return view('transaction.edit', compact('transaction'));
     }
 
     /**
@@ -78,7 +79,10 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $transaction = Transaction::find($id);
+        $transaction->update($request->all());
+
+        return redirect()->route('transactions.index');
     }
 
     /**
@@ -89,6 +93,7 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Transaction::find($id)->delete();
+        return redirect()->route('transactions.index');
     }
 }

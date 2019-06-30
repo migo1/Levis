@@ -27,8 +27,8 @@
             <td>{{ $transaction->name }}</td>
 
             <td>
-                <a class="btn btn-primary btn-flat btn-sm" href="#">Edit</a>
-                 {!! Form::open(['method' => 'DELETE','style'=>'display:inline']) !!}
+            <a class="btn btn-primary btn-flat btn-sm" href="/transactions/{{$transaction->id}}/edit">Edit</a>
+                 {!! Form::open(['method' => 'DELETE','route' => ['transactions.destroy', $transaction->id],'style'=>'display:inline']) !!}
                      {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-flat btn-sm']) !!}
                  {!! Form::close() !!}
             </td>

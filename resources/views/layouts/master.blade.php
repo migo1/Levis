@@ -10,6 +10,7 @@
 
   <title>LEMIS</title>
   <link href="/img/avatar.png" rel="icon" type="image/png">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
   <script src="/js/app.js"></script>
 
@@ -90,6 +91,37 @@
                 </a>
               </li>
 
+
+              
+
+              <li class="nav-item has-treeview ">
+                <a href="#" class="nav-link ">
+                  <i class="nav-icon fas fa-fist-raised"></i>
+                  <p>
+                     HR Mannagenment
+                    <i class="right fa fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('payrolls.index') }}" class="nav-link ">
+                      <i class="fas fa-money-bill-wave mr-1"></i>
+                      <p>Payroll </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('leaves.index') }}" class="nav-link">
+                      <i class="fas fa-bed mr-1"></i>
+                      <p>Leave </p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+
+
+
+
               <li class="nav-item">
               <a href="{{ route('clients.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-briefcase"></i>
@@ -101,9 +133,9 @@
 
               <li class="nav-item">
                   <a href="{{ route('transactions.index')}}" class="nav-link">
-                      <i class="nav-icon fas fa-concierge-bell"></i> 
+                      <i class="nav-icon fas fa-gavel"></i> 
                         <p>
-                          Transactions                
+                          Case Types                
                         </p>
                       </a>
                     </li>
@@ -173,12 +205,12 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <div class="content">
+   {{-- <div class="content">--}}
       <div class="container-fluid">
        @yield('content')
         <!-- /.row -->
       </div><!-- /.container-fluid -->
-    </div>
+    {{--</div>--}}
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -198,8 +230,6 @@
 <!-- ./wrapper -->
 
 
-
-
-
 </body>
+
 </html>

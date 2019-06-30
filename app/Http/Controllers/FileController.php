@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\File;
+use App\Client;
+use App\Transaction;
 
 class FileController extends Controller
 {
@@ -19,8 +21,10 @@ class FileController extends Controller
     }
     public function index()
     {
+        $transactions = Transaction::all();
+        $clients = Client::all();
         $files = File::orderBy('created_at','desc')->paginate(5);
-        return view('file.index',compact('files'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('file.index',compact('files','clients','transactions'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -30,7 +34,9 @@ class FileController extends Controller
      */
     public function create()
     {
-        //
+        $transactions = Transaction::all();
+        $client = Client::all();
+        return view('file.create', compact('client','transactions'));
     }
 
     /**
@@ -63,7 +69,8 @@ class FileController extends Controller
                 //  Could not save, try it again
             }
         }
-        return redirect()->route('clients.show',$client_id);
+       // return redirect()->route('clients.show',$client_id);
+       return back();
     }
 
     /**
@@ -85,7 +92,11 @@ class FileController extends Controller
      */
     public function edit($id)
     {
-        //
+      #  $client = Client::find($id);
+        $files = File::find($id);
+        $transactions = Transaction::all(); 
+        return view('client.file_edit', compact('files','transactions'));
+
     }
 
     /**
@@ -95,9 +106,19 @@ class FileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $file = File::findOrFail($request->file_id);
+        $file->transaction_id = $request->input('transaction_id');
+        $file->court_day = $request->input('court_day');
+        $file->description = $request->input('description');
+        $file->client_id = $request->input('client_id');
+        $file->reference;
+        $client_id = $file->client_id;
+        $transaction_id = $file->transaction_id;
+        $file->update();
+
+        return redirect()->route('clients.show',$client_id);
     }
 
     /**
@@ -108,6 +129,9 @@ class FileController extends Controller
      */
     public function destroy($id)
     {
-        //
+                $files = File::find($id);
+                File::find($id)->delete();
+                $client_id =  $files->client_id;
+                return redirect()->route('clients.show',$client_id);
     }
 }

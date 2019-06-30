@@ -34,8 +34,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        
-        return view('client.create');
+    
     }
 
     /**
@@ -72,7 +71,8 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        return view('client.edit');
+        $client = Client::find($id);
+        return view('client.edit', compact('client'));
     }
 
     /**
@@ -82,9 +82,16 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $client = Client::findOrFail($request->client_id);
+        $client->uuid;
+        $client->name = $request->input('name');
+        $client->email = $request->input('email');
+        $client->mobile_no = $request->input('mobile_no');
+        $client->update();
+
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -93,8 +100,10 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $client = Client::findOrFail($request->client_id);
+        $client->delete();
+        return back();
     }
 }

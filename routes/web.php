@@ -1,4 +1,5 @@
 <?php
+//use Symfony\Component\Routing\Annotation\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,8 @@ Route::group(['middleware' => ['auth']], function() {
 Route::resource('dashboard', 'DashboardController');
 Route::resource('clients', 'ClientController');
 Route::resource('transactions', 'TransactionController');
-Route::resource('files', 'FileController')->except([
-    'create'
-]);
+Route::resource('files', 'FileController');
 Route::get('/calendar','CalendarController@index');
+Route::resource('leaves', 'LeaveController');
+Route::resource('payrolls', 'PayrollController');
 

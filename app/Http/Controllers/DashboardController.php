@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\File;
+use App\Client;
+use App\Transaction;
 use DB;
+use MaddHatter\LaravelFullcalendar\Facades\Calendar;
+
 
 class DashboardController extends Controller
 {
@@ -22,10 +27,40 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $events = [];
+        $data = File::all();
+        if($data->count()) {
+            foreach ($data as $key => $value) {
+
+               
+
+                $events[] = Calendar::event(
+                    $value->client->name,
+                    false,
+                    //new \DateTime($value->start_date),
+                    new \DateTime($value->court_day),
+
+                    //new \DateTime($value->end_date.' +1 day'),
+                    new \DateTime($value->court_day),
+                    //null,
+                    $value->id,
+                    // Add color and link on event
+	                [
+	                    'color' => '#f05050',
+	                   // 'url' => 'pass here url and any route',
+	                ]
+                );
+            }
+        }
+        $calendar = Calendar::addEvents($events);
 
         $todays_case = File::whereDate('court_day',DB::raw('CURDATE()'))->paginate(5);
+        $users = User::all()->count();
+        $clients = Client::all()->count();
+        $files = File::all()->count();
+        $transactions = Transaction::all()->count();
 
-        return view('dashboard.index',compact('todays_case'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('dashboard.index',compact('todays_case','calendar','users','clients','files','transactions'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
