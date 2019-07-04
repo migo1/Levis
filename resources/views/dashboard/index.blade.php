@@ -127,4 +127,221 @@
 
 </section>
 
+<section>
+  <div class="row">
+    <div class="card ml-2">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-bed "></i>
+           Leaves List
+          </h3>
+
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          <table class="table table-hover">
+            <tr>
+              <th>Leave Type</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Response</th>
+              <th>Action</th>
+            </tr>
+            @foreach ($leave_req as $leave_requests)
+            <tr>         
+            <td>{{ $leave_requests->leave->leave_type}}</td>
+            <td>{{ $leave_requests->from}}</td>
+            <td>{{ $leave_requests->to}}</td>
+            @if($leave_requests->response == 'Approved')
+            <td><span class="label label-success"><strong>{{$leave_requests->response}}</strong></span></td>
+            @elseif($leave_requests->response == 'Pending')
+            <td><span class="label label-warning"><strong>{{$leave_requests->response}}</strong></span></td>
+            @elseif($leave_requests->response == 'Denied')
+            <td><span class="label label-danger"><strong>{{$leave_requests->response}}</strong></span></td>
+            @endif
+
+            @if($leave_requests->response == 'Approved')
+            @elseif($leave_requests->response == 'Denied')
+                @can('view-file')
+                <td>
+                  <button class="btn btn-sm btn-flat btn-primary"
+                data-mylrid="{{ $leave_requests->id }}" data-myuid="{{ $leave_requests->user_id }}"
+                data-mylid="{{ $leave_requests->leave_id }}" data-myfrom="{{ $leave_requests->from }}" data-myto="{{ $leave_requests->to }}"
+                data-mydiff="{{ $leave_requests->days_diff }}" data-myreason="{{ $leave_requests->reason }}"
+                data-myresponse="{{ $leave_requests->response }}" data-myreply="{{ $leave_requests->response }}"
+                  data-toggle="modal" data-target="#edit_leave_request"
+                  >
+                    Edit
+                  </button>
+                  <button class="btn btn-sm btn-flat btn-danger"
+                  data-mylrid="{{ $leave_requests->id }}"
+                  data-toggle="modal" data-target="#delete_leave_request"
+                  >
+                    Delete
+                  </button>
+                </td>
+                @endcan
+                @else
+                <td>
+                  <button class="btn btn-sm btn-flat btn-primary"
+                data-mylrid="{{ $leave_requests->id }}" data-myuid="{{ $leave_requests->user_id }}"
+                data-mylid="{{ $leave_requests->leave_id }}" data-myfrom="{{ $leave_requests->from }}" data-myto="{{ $leave_requests->to }}"
+                data-mydiff="{{ $leave_requests->days_diff }}" data-myreason="{{ $leave_requests->reason }}"
+                data-myresponse="{{ $leave_requests->response }}" data-myreply="{{ $leave_requests->response }}"
+                  data-toggle="modal" data-target="#edit_leave_request"
+                  >
+                    Edit
+                  </button>
+                  <button class="btn btn-sm btn-flat btn-danger"
+                  data-mylrid="{{ $leave_requests->id }}"
+                  data-toggle="modal" data-target="#delete_leave_request"
+                  >
+                    Delete
+                  </button>
+                </td>
+            @endif
+
+            </tr>
+            @endforeach
+          </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+          <button type="button" class="btn btn-primary btn-sm btn-flat float-right"
+          data-toggle="modal" data-target="#leave_request">
+          <i class="fas fa-bed mr-2"></i>Request Leave</button>
+        </div>
+      </div>
+      <!-- /.card -->
+    </div>
+    </section>
+
+
+
+
+
+
+    <!-- Modal leave_request-->
+<div class="modal fade" id="leave_request" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Leave Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form-horizontal" method="POST" action="{{ route('requests.store')}}">
+        @csrf
+      <div class="modal-body">
+        
+        @include('dashboard.leave_request')
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm btn-flat" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary btn-sm btn-flat">Request</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal edit_leave_request-->
+<div class="modal fade" id="edit_leave_request" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Leave Request</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form-horizontal" method="POST" action="{{ route('requests.update','test')}}">
+        {{method_field('patch')}}
+        @csrf
+      <div class="modal-body">
+      <input type="hidden" name="leave_request_id" id="leave_request_id" value="">
+        
+        @include('dashboard.edit_leave_request')
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm btn-flat" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary btn-sm btn-flat">Save Changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal delete_leave_request-->
+<div class="modal fade" id="delete_leave_request" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Leave Request</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form-horizontal" method="POST" action="{{ route('requests.destroy','test')}}">
+        {{method_field('delete')}}
+        @csrf
+      <div class="modal-body">
+      <input type="hidden" name="leave_request_id" id="leave_request_id" value="">
+        
+        <p class="text-center">
+          Are you sure you want to delete this request
+        </p>
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm btn-flat" data-dismiss="modal">No, Cancel</button>
+        <button type="submit" class="btn btn-danger btn-sm btn-flat">Yes, Delete</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('#edit_leave_request').on('show.bs.modal', function (event) {
+
+  var button = $(event.relatedTarget) 
+  var leave_request_id = button.data('mylrid')
+  var user_id = button.data('myuid')
+  var leave_id = button.data('mylid')
+  var from = button.data('myfrom')
+  var to = button.data('myto')
+  var days_diff = button.data('mydiff')
+  var reason = button.data('myreason')
+  var response = button.data('myresponse')
+  var reply = button.data('myreply')
+
+  var modal = $(this)
+  modal.find('.modal-body #leave_request_id').val(leave_request_id)
+  modal.find('.modal-body #user_id').val(user_id)
+  modal.find('.modal-body #leave_id').val(leave_id)
+  modal.find('.modal-body #from').val(from)
+  modal.find('.modal-body #to').val(to)
+  modal.find('.modal-body #days_diff').val(days_diff)
+  modal.find('.modal-body #reason').val(reason)
+  modal.find('.modal-body #response').val(response)
+  modal.find('.modal-body #reply').val(reply)
+})
+  </script>
+
+<script>
+  $('#delete_leave_request').on('show.bs.modal', function (event) {
+
+  var button = $(event.relatedTarget) 
+  var leave_request_id = button.data('mylrid')
+
+  var modal = $(this)
+  modal.find('.modal-body #leave_request_id').val(leave_request_id)
+
+})
+  </script>
 @endsection

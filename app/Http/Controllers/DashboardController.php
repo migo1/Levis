@@ -7,7 +7,11 @@ use App\User;
 use App\File;
 use App\Client;
 use App\Transaction;
+use App\LeaveRequest;
+use App\Leave;
 use DB;
+use Illuminate\Support\Facades\Auth;
+
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 
 
@@ -59,8 +63,10 @@ class DashboardController extends Controller
         $clients = Client::all()->count();
         $files = File::all()->count();
         $transactions = Transaction::all()->count();
+        $leaves = Leave::all();
+        $leave_req = Auth::user()->leaveRequests()->orderBy('created_at','desc')->paginate(5);
 
-        return view('dashboard.index',compact('todays_case','calendar','users','clients','files','transactions'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('dashboard.index',compact('todays_case','calendar','users','clients','files','transactions','leaves','leave_req'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

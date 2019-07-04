@@ -20,7 +20,7 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::orderBy('created_at','desc')->paginate(5);
-        return view('transaction.index',compact('transactions'))->with('i', (request()->input('page', 1) - 1) * 5);;
+        return view('transaction.index',compact('transactions'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

@@ -32,4 +32,5 @@ Route::resource('files', 'FileController');
 Route::get('/calendar','CalendarController@index');
 Route::resource('leaves', 'LeaveController');
 Route::resource('payrolls', 'PayrollController');
+Route::resource('requests', 'LeaveRequestController');
 
