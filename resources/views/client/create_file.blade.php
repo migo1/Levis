@@ -1,4 +1,6 @@
 
+    
+
 <div class="row">
   <div class="card-body">
         <div class="form-group">
@@ -6,12 +8,24 @@
 
 <div class="col-sm-10">
     <select name="transaction_id" class="form-control">
+        <option value="" >Select case type</option>
             @foreach ($transactions as $transaction)
         <option value="{{$transaction->id}}">{{$transaction->name}}</option>                                   
             @endforeach
         </select>
 </div>
 </div>
+
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">Type</label><br>
+    
+    <div class="col-sm-10">
+        <select name="party_id" id="party_id" class="form-control">
+            <option value=""></option>                                   
+            </select>
+    </div>
+    </div>
               
   <div class="form-group">
     <label class="col-sm-2 control-label">Date</label>

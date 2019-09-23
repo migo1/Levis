@@ -3,24 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Transaction;
 
-class TransactionController extends Controller
+class ClientFileController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function index()
     {
-        $transactions = Transaction::orderBy('created_at','desc')->paginate(5);
-        return view('transaction.index',compact('transactions'))->with('i', (request()->input('page', 1) - 1) * 5);
+        //
     }
 
     /**
@@ -30,7 +23,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        return view('transaction.create');
+        //
     }
 
     /**
@@ -41,10 +34,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        Transaction::create($request->all());
-
-        return redirect()->route('transactions.index');
-
+        //
     }
 
     /**
@@ -55,11 +45,7 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        $transaction = Transaction::find($id);
-
-
-      //  dd($transaction);
-        return view('transaction.show',compact('transaction'));
+        //
     }
 
     /**
@@ -70,8 +56,7 @@ class TransactionController extends Controller
      */
     public function edit($id)
     {
-        $transaction = Transaction::find($id);
-        return view('transaction.edit', compact('transaction'));
+        //
     }
 
     /**
@@ -83,10 +68,7 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $transaction = Transaction::find($id);
-        $transaction->update($request->all());
-
-        return redirect()->route('transactions.index');
+        //
     }
 
     /**
@@ -97,7 +79,6 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        Transaction::find($id)->delete();
-        return redirect()->route('transactions.index');
+        //
     }
 }

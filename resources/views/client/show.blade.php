@@ -52,6 +52,7 @@
                   <button type="button" class="btn btn-success btn-flat btn-sm m-0 float-right" data-toggle="modal" data-target="#create_file">
                       Add New File
                     </button>
+                 {{-- <a class="btn btn-success btn-flat btn-sm m-0 float-right" href="{{ route('client_files.show',$client->id) }}">New File</a>--}}
               </h3>
       
             </div>
@@ -59,19 +60,21 @@
         <table class="table table-hover">
           <tr>
             <th>Date</th>
-            <th>Description</th>
             <th>reference</th>
-            <th>Type</th>
+            <th>Case Type</th>
+            <th>Party</th>
             <th>Action</th>
           </tr>
           @foreach ($client->files as $file)
           <tr>
             <td>{{ $file->court_day }}</td>
-          <td>{{ $file->description}}</td>
           <td>{{ $file->reference}}</td>
           <td>{{ $file->transaction->name}}</td>
+          <td>{{ $file->party->name }}</td>
 
             <td>
+              <a class="btn btn-sm btn-flat btn-dark" href="#">view</a>
+
             <button class="btn btn-primary btn-flat btn-sm" 
 
             data-myflid="{{ $file->id }}" data-mytrid="{{ $file->transaction}}" data-mycourtday="{{ $file->court_day }}"
@@ -223,4 +226,33 @@
   })
     </script>
   
+
+  <script>
+      $(document).ready(function(){
+       $('select[name="transaction_id"]').on('change', function(){
+         var transaction_id = $(this).val();
+         if(transaction_id)
+          {
+          
+          $.ajax({
+              url:'/getParties/'+transaction_id,
+              type: 'GET',
+              dataType: 'json',
+              success: function(data){
+                  console.log(data);
+                  $('select[name="party_id"]').empty();
+                  $.each(data, function(key, value){
+                      $('select[name="party_id"]')
+                      .append('<option value="'+key+'">'+ value +'</option>');
+                  });
+              }
+          });
+           } else {
+              $('select[name="party_id"]').empty();
+           }
+       });
+      });
+  </script>
+
+
 @endsection

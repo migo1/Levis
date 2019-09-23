@@ -36,6 +36,14 @@ Route::resource('requests', 'LeaveRequestController');
 Route::resource('staff_details', 'StaffDetailController');
 Route::resource('staff_images', 'StaffImageController');
 Route::resource('holidays', 'HolidayController');
+Route::resource('parties', 'PartyController');
+Route::get('/getParties/{id}', 'MainController@getParties');
+
+
+Route::resource('clients.files', 'ClientFileController');
+
+
+
 
 Route::get('/file_search', 'SearchFileController@index');
 Route::get('/file_search/search', 'SearchFileController@search')->name('search');

@@ -1,4 +1,4 @@
-{{--@extends('layouts.master')
+@extends('layouts.master')
 
 @section('content')
 
@@ -11,7 +11,7 @@
         <!-- /.card-header -->
         <!-- form start -->
     <form method="POST" action="{{ route('transactions.store')}}">
-            {{ csrf_field()}}--}}
+            {{ csrf_field()}}
           <div class="card-body">
             <div class="form-group">
               <label for="exampleInputEmail1">Type Of Transaction</label>
@@ -21,9 +21,9 @@
           </div>
           <!-- /.card-body -->
 
-         {{-- <div class="card-footer">
+          <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
       </div>
-@endsection--}}
+@endsection

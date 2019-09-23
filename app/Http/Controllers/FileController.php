@@ -60,6 +60,7 @@ class FileController extends Controller
             {
                 
                 $file->transaction_id = $request->input('transaction_id');
+                $file->party_id = $request->input('party_id');
                 $file->court_day = $request->input('court_day');
                 $file->description = $request->input('description');
                 $file->client_id = $request->input('client_id');
@@ -121,6 +122,7 @@ class FileController extends Controller
     {
         $file = File::findOrFail($request->file_id);
         $file->transaction_id = $request->input('transaction_id');
+        $file->party_id = $request->input('party_id');
         $file->court_day = $request->input('court_day');
         $file->description = $request->input('description');
         $file->client_id = $request->input('client_id');

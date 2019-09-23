@@ -8,13 +8,17 @@ class File extends Model
 {
     protected $fillable = [
 
-        'transaction_id','court_day','description','client_id','request'
+        'transaction_id','party_id','court_day','description','client_id','request'
         ,'reason', 'user_id', 'request_reply', 'reason_reply'
 
     ];
 
     public function transaction() {
         return $this->belongsTo('App\Transaction');
+    }
+
+    public function party() {
+        return $this->belongsTo('App\Party');
     }
 
     public function client() {

@@ -18,4 +18,8 @@ class Transaction extends Model
     {
         return $this->belongsToMany('App\Client', 'transaction_client');
     }
+
+    public function parties() {
+        return $this->hasMany('App\Party');
+    }
 }
