@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\File;
 use App\Client;
 use App\Transaction;
+use App\User;
 
 class FileController extends Controller
 {
@@ -15,15 +17,19 @@ class FileController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
+    function __construct()
     {
-        $this->middleware('auth');
+         $this->middleware('auth');
+      //   $this->middleware('permission:file-list');
+        // $this->middleware('permission:file-create', ['only' => ['create','store']]);
+         //$this->middleware('permission:file-edit', ['only' => ['edit','update']]);
+         //$this->middleware('permission:file-delete', ['only' => ['destroy']]);
     }
     public function index()
     {
         $transactions = Transaction::all();
         $clients = Client::all();
-        $files = File::orderBy('created_at','desc')->paginate(5);
+        $files = File::orderBy('created_at','desc')->paginate(10);
         return view('file.index',compact('files','clients','transactions'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -60,6 +66,11 @@ class FileController extends Controller
                 $file->reference  = rand(100000000,1000000000);
                 $client_id = $file->client_id;
                 $transaction_id = $file->transaction_id;
+                $file->request = $request->input('request');
+                $file->reason = $request->input('reason');
+                $file->user_id = $request->input('user_id');
+                $file->request_reply = $request->input('request_reply');
+                $file->reason_reply = $request->input('reason_reply');
                 $file->save();
                 //  We could save now we break out of the loop
                 break;
@@ -95,7 +106,7 @@ class FileController extends Controller
       #  $client = Client::find($id);
         $files = File::find($id);
         $transactions = Transaction::all(); 
-        return view('client.file_edit', compact('files','transactions'));
+        return view('client.file_edit', compact('files','transactions','associates'));
 
     }
 
@@ -113,12 +124,14 @@ class FileController extends Controller
         $file->court_day = $request->input('court_day');
         $file->description = $request->input('description');
         $file->client_id = $request->input('client_id');
-        $file->reference;
-        $client_id = $file->client_id;
-        $transaction_id = $file->transaction_id;
+        $file->request = $request->input('request');
+        $file->reason = $request->input('reason');
+        $file->user_id = $request->input('user_id');
+        $file->request_reply = $request->input('request_reply');
+        $file->reason_reply = $request->input('reason_reply');  
         $file->update();
 
-        return redirect()->route('clients.show',$client_id);
+        return back();
     }
 
     /**
@@ -127,11 +140,11 @@ class FileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-                $files = File::find($id);
-                File::find($id)->delete();
-                $client_id =  $files->client_id;
-                return redirect()->route('clients.show',$client_id);
+                $file = File::findOrFail($request->file_id);
+                $file->delete();
+              //  $client_id =  $files->client_id;
+                return back();
     }
 }

@@ -4,7 +4,31 @@
 @section('content')
     
 <div class="row ">
-        <div class="col-12">
+<div class="col-md-4">
+    <form action="{{ route('file_search') }}" method="GET">
+        <h3>File Search</h3><br>  
+        <label>Client's Name :</label>     
+        <select name="client_id" class="form-control">
+            @foreach ($clients as $client)
+        <option value="{{$client->id}}">{{$client->name}}</option>                                   
+            @endforeach
+        </select><br>  
+        <label>Court Case :</label>
+        <select name="transaction_id" class="form-control">
+            @foreach ($transactions as $transaction)
+        <option value="{{$transaction->id}}">{{$transaction->name}}</option>                                   
+            @endforeach
+        </select><br>  
+        <label>Court Date :</label>   
+        <input type="text" name="court_day" class="form-control" placeholder="Date"><br>       
+        <label>Reference Number:</label>
+        <input type="text" name="reference" class="form-control" placeholder="reference number">       
+ <br>       
+        <input type="submit" value="Search" class="btn btn-secondary">       
+        </form>
+
+      </div>
+        <div class="col-md-8">
           <div class="card mt-2">
             <div class="card-header">
               <h3 class="card-title">Files Table
@@ -22,7 +46,7 @@
             <th>Client's Name</th>
             <th>Transaction</th>
             <th>Reference</th>
-            <th>Action</th>
+            {{--<th>Action</th>--}}
           </tr>
           @foreach ($files as $file)
           <tr>
@@ -31,13 +55,13 @@
             <td>{{ $file->client->name }}</td>
             <td>{{ $file->transaction->name }}</td>
             <td>{{ $file->reference}}</td>
-            <td>
+           {{-- <td>
             <a class="btn btn-info btn-flat btn-sm" href="#">Show</a>
                 <a class="btn btn-primary btn-flat btn-sm" href="#">Edit</a>
                  {!! Form::open(['method' => 'DELETE','style'=>'display:inline']) !!}
                      {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-flat btn-sm']) !!}
                  {!! Form::close() !!}
-            </td>
+            </td>--}}
           </tr>
           @endforeach
         </table>

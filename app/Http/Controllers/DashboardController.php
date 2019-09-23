@@ -10,6 +10,7 @@ use App\Transaction;
 use App\LeaveRequest;
 use App\Leave;
 use DB;
+use App\Holiday;
 use Illuminate\Support\Facades\Auth;
 
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
@@ -33,6 +34,8 @@ class DashboardController extends Controller
     {
         $events = [];
         $data = File::all();
+        $holidays = Holiday::whereMonth('holiday_date', '=', date('m'))->whereDay('holiday_date', '=', date('d'))->get();
+
         if($data->count()) {
             foreach ($data as $key => $value) {
 
@@ -56,6 +59,32 @@ class DashboardController extends Controller
                 );
             }
         }
+
+        if($holidays->count()) {
+            foreach ($holidays as $key => $holiday) {
+
+               
+
+                $events[] = Calendar::event(
+                    $holiday->holiday_name,
+                    false,
+                    //new \DateTime($value->start_date),
+                    new \DateTime($holiday->holiday_date),
+
+                    //new \DateTime($value->end_date.' +1 day'),
+                    new \DateTime($holiday->holiday_date),
+                    //null,
+                    $holiday->id,
+                    // Add color and link on event
+	                [
+	                    'color' => '#3490dc',
+	                   // 'url' => 'pass here url and any route',
+	                ]
+                );
+            }
+        }
+
+        
         $calendar = Calendar::addEvents($events);
 
         $todays_case = File::whereDate('court_day',DB::raw('CURDATE()'))->paginate(5);
@@ -98,7 +127,9 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        
+        return view('layouts.master', compact('user'));
     }
 
     /**

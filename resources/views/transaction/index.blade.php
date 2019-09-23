@@ -2,13 +2,12 @@
 
 @section('content')
 
-<a href="{{ route('transactions.create')}}" class="btn btn-success">Create Transacrion</a>
 
 <div class="row ">
         <div class="col-12">
           <div class="card mt-2">
             <div class="card-header">
-              <h3 class="card-title">Transaction's Table<a class="btn btn-success btn-flat btn-sm m-0 float-right" href="{{ route('clients.create')}}">Add New Client</a></h3>
+              <h3 class="card-title">Case Types<a class="btn btn-success btn-flat btn-sm m-0 float-right" href="{{ route('transactions.create')}}">Create New Case Type</a></h3>
       
       
             </div>
@@ -17,7 +16,7 @@
           <tr>
             <th>No</th>
 
-            <th>Transaction</th>
+            <th>case type</th>
 
           </tr>
           @foreach ($transactions as $transaction)

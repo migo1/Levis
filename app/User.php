@@ -41,4 +41,16 @@ class User extends Authenticatable
     public function leaveRequests() {
         return $this->hasMany('App\LeaveRequest');
     }
+
+    public function files() {
+        return $this->hasMany('App\Files');
+    }
+
+    public function staff_detail() {
+        return $this->hasOne('App\StaffDetail');
+    }
+
+    public function staff_image() {
+        return $this->hasOne('App\StaffImage');
+    }
 }

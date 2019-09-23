@@ -28,6 +28,8 @@
 
 
 </head>
+
+@yield('login')
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
@@ -41,16 +43,7 @@
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+
 
     <!-- Right navbar links -->
 
@@ -71,6 +64,13 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
+            @php
+                      $pic_url =  asset('dist/img/user.jpg');
+                      if(auth()->user()->staff_image){
+                          $pic_url =  "/storage/cover_images/".auth()->user()->staff_image->photo;
+                     }
+
+                  @endphp
           <img src="/img/user.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
@@ -98,11 +98,17 @@
                 <a href="#" class="nav-link ">
                   <i class="nav-icon fas fa-fist-raised"></i>
                   <p>
-                     HR Mannagenment
+                     HR Managenment
                     <i class="right fa fa-angle-left"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('staff_details.index') }}" class="nav-link ">
+                          <i class="fas fa-user-tie mr-1"></i>
+                          <p>Staff </p>
+                        </a>
+                      </li>
                   <li class="nav-item">
                     <a href="{{ route('payrolls.index') }}" class="nav-link ">
                       <i class="fas fa-money-bill-wave mr-1"></i>
@@ -113,6 +119,12 @@
                     <a href="{{ route('leaves.index') }}" class="nav-link">
                       <i class="fas fa-bed mr-1"></i>
                       <p>Leave </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('holidays.index') }}" class="nav-link">
+                      <i class="fas fa-gifts mr-1"></i>
+                      <p>Holidays </p>
                     </a>
                   </li>
                 </ul>
@@ -140,14 +152,29 @@
                       </a>
                     </li>
 
-              <li class="nav-item">
-                  <a href="{{ route('files.index')}}" class="nav-link">
-                      <i class="nav-icon fas fa-file-alt"></i> 
-                        <p>
-                          Files                
-                        </p>
-                      </a>
-                    </li>
+                    <li class="nav-item has-treeview ">
+                        <a href="#" class="nav-link ">
+                          <i class="nav-icon fas fa-file-alt"></i>
+                          <p>
+                             File Managenment
+                            <i class="right fa fa-angle-left"></i>
+                          </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                            <a href="{{ url('/file_search')}}" class="nav-link ">
+                              <i class="nav-icon fas fa-search"></i>
+                              <p>File Search</p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#" class="nav-link">
+                              <i class="nav-icon fas fa-file-prescription"></i>
+                              <p>Requested Files</p>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
 
                     <li class="nav-item">
                         <a href="{{ url('/calendar')}}" class="nav-link">
@@ -162,7 +189,7 @@
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-cog"></i>
               <p>
-                 Mannagenment
+                 Managenment
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
@@ -182,13 +209,20 @@
             </ul>
           </li>
 
+
+
           <li class="nav-item">
-            <a href="#" class="nav-link">
+              <a class="nav-link" href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+              document.getElementById('logout-form').submit();">
               <i class="nav-icon fas fa-power-off"></i>
               <p>
                 Logout                
               </p>
             </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
           </li>
 
         </ul>
@@ -219,12 +253,12 @@
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <!-- To the right -->
+   {{-- <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2018 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2014-2018 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.--}}
   </footer>
 </div>
 <!-- ./wrapper -->

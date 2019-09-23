@@ -33,4 +33,13 @@ Route::get('/calendar','CalendarController@index');
 Route::resource('leaves', 'LeaveController');
 Route::resource('payrolls', 'PayrollController');
 Route::resource('requests', 'LeaveRequestController');
+Route::resource('staff_details', 'StaffDetailController');
+Route::resource('staff_images', 'StaffImageController');
+Route::resource('holidays', 'HolidayController');
+
+Route::get('/file_search', 'SearchFileController@index');
+Route::get('/file_search/search', 'SearchFileController@search')->name('search');
+
+
+
 
