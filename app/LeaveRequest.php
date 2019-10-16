@@ -9,7 +9,7 @@ class LeaveRequest extends Model
     //protected $table = 'leave_requests';
 
     protected $fillable = [
-        'user_id', 'leave_id', 'from', 'to', 'days_diff', 'reason', 'response', 'reply'
+        'user_id', 'leave_id', 'from', 'to', 'days_diff', 'reason', 'response', 'reply','remainder'
     ];
 
     public function user() {

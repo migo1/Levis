@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function staff_image() {
         return $this->hasOne('App\StaffImage');
     }
+
+    public function payrolls() {
+        return $this->hasMany('App\Payroll');
+    }
 }

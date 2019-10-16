@@ -59,6 +59,7 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::find($id);
+     //   dd($client->files);
         $transactions = Transaction::all();
         return view ('client.show',compact('client','transactions'));
     }
