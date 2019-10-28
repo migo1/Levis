@@ -168,7 +168,7 @@
               <th>Leave Type</th>
               <th>From</th>
               <th>To</th>
-              <th>Remainder</th>
+           <th>Remainder</th>
               <th>Response</th>
               <th>Action</th>
             </tr>
@@ -177,7 +177,7 @@
             <td>{{ $leave_requests->leave->leave_type}}</td>
             <td>{{ $leave_requests->from}}</td>
             <td>{{ $leave_requests->to}}</td>
-            <td>{{ $leave_requests->remainder}}</td>
+          <td>{{ $leave_requests->remainder}}</td>
             @if($leave_requests->response == 'Approved')
             <td><span class="label label-success"><strong>{{$leave_requests->response}}</strong></span></td>
             @elseif($leave_requests->response == 'Pending')

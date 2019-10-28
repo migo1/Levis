@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Payroll;
 use App\User;
+use DB;
+
 
 class PayrollController extends Controller
 {
@@ -17,8 +19,14 @@ class PayrollController extends Controller
     {
 
         $payrolls = Payroll::orderBy('created_at','desc')->paginate(5);
-        $users = User::orderBy('created_at','desc')->paginate(5);
+       $users = User::orderBy('created_at','desc')->paginate(5);
     
+      // $users = DB::table('users')
+              //  ->join('payrolls', 'payrolls.user_id', '=','users.id')
+              // ->select('users.*','payrolls.gross_pay', 'payrolls.deductions', 'payrolls.net_pay')
+               // ->get();
+
+               // return $users;
 
         return view('payroll.index',compact('payrolls','users'))->with('i',(request()->input('page', 1)-1)*5);
     }
@@ -85,19 +93,26 @@ class PayrollController extends Controller
           
        $payroll->NSSF = $request->input('NSSF');
        $nssf =  $payroll->NSSF ;
+
        $payroll->NHIF = $request->input('NHIF');
         $nhif =  $payroll->NHIF;
 
-        $deductions = $payroll->PAYE + $nssf + $nhif;
+        $payroll->relief = $request->input('relief');
+
+        $rel = $payroll->relief;
+
+        $relief = $payroll->PAYE - $rel ;
+
+        $deductions =  $relief + $nssf + $nhif;
 
        $payroll->deductions = $deductions;
 
-       $payroll->relief = $request->input('relief');
+      
 
-        $relief = $payroll->PAYE - $payroll->relief;
-        $rel = $relief + $nssf + $nhif;
+        
+       // $rel = $relief + $nssf + $nhif;
 
-        $net = $gross - $rel;
+        $net = $gross - $deductions;
 
        $payroll->net_pay = $net;
 
@@ -114,7 +129,7 @@ class PayrollController extends Controller
      */
     public function show($id)
     {
-        $payroll = Payroll::find($id);
+      //  $payroll = Payroll::find($id);
 
         $user = User::find($id);
 
@@ -131,7 +146,10 @@ class PayrollController extends Controller
      */
     public function edit($id)
     {
-        return view('payroll.edit');
+        $user = User::find($id);
+        
+
+        return view('payroll.edit',compact('user'));
 
     }
 
@@ -144,7 +162,75 @@ class PayrollController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $payroll = Payroll::find($id);
+        $payroll->user_id = $request->input('user_id');
+        $payroll->basic = $request->input('basic');
+        $basic = $payroll->basic;
+        $payroll->house_allowance = $request->input('house_allowance');
+        $house = $payroll->house_allowance;
+        $payroll->medical_allowance = $request->input('medical_allowance');
+         $medical = $payroll->medical_allowance;
+        $payroll->other_allowance = $request->input('other_allowance');
+         $others = $payroll->other_allowance;
+ 
+         $gross =  $basic + $house + $medical + $others;
+ 
+         $payroll->gross_pay = $gross;
+ 
+         if ($gross >= 0 && $gross <=12298 ) {
+ 
+             $payroll->PAYE = 10 / 100 * $gross;
+ 
+         }elseif ($gross >= 12299 && $gross <=23885){
+ 
+             $payroll->PAYE = 15 / 100 * $gross;
+ 
+         }elseif ($gross >= 23886 && $gross <=35472){
+ 
+             $payroll->PAYE = 20 / 100 * $gross;
+ 
+         }elseif ($gross >= 35473 && $gross <=47059){
+ 
+             $payroll->PAYE = 25 / 100 * $gross;
+ 
+         }elseif ($gross > 47059){
+ 
+             $payroll->PAYE = 30 / 100 * $gross;
+ 
+         }else {
+             $payroll->PAYE =  0;
+         }
+       
+ 
+           
+        $payroll->NSSF = $request->input('NSSF');
+        $nssf =  $payroll->NSSF ;
+ 
+        $payroll->NHIF = $request->input('NHIF');
+         $nhif =  $payroll->NHIF;
+ 
+         $payroll->relief = $request->input('relief');
+ 
+         $rel = $payroll->relief;
+ 
+         $relief = $payroll->PAYE - $rel ;
+ 
+         $deductions =  $relief + $nssf + $nhif;
+ 
+        $payroll->deductions = $deductions;
+ 
+       
+ 
+         
+        // $rel = $relief + $nssf + $nhif;
+ 
+         $net = $gross - $deductions;
+ 
+        $payroll->net_pay = $net;
+ 
+        $payroll->update();
+ 
+        return back();
     }
 
     /**

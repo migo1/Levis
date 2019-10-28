@@ -16,4 +16,9 @@ class Payroll extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
 }

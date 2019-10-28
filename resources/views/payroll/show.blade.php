@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="row mb-2">
-    <div class="col-sm-6">
-      <h1>Salary Details</h1>
+    <div class="col-sm-12">
+    <h1>Salary Details <a href="{{ route('payrolls.index') }}" class="btn btn-success btn-flat float-right">Back</a></h1>
     </div>
   </div>
 
@@ -15,18 +15,12 @@
             @foreach ($user->payrolls as $payroll )
           <div class="card-body">
             <div class="form-group">
-            <p>basic = {{ $payroll->basic }}</p>
-            <p>House Allowance = {{ $payroll->house_allowance }}</p>
-            <p>Medical Allowance = {{ $payroll->medical_allowance }}</p>
-            <p>Other Allowance = {{ $payroll->other_allowance }}</p>
+         
               <label for="exampleInputEmail1">Gross Pay:</label>
               <input type="text" class="form-control" id="exampleInputEmail1" value="{{ $payroll->gross_pay }}" disabled>
             </div>
             <div class="form-group">
-                <p> PAYE = {{ $payroll->PAYE }} </p>
-                <P> NSSF = {{ $payroll->NSSF }} </P>
-                <p> NHIF = {{ $payroll->NHIF }} </p>
-                <P> tax-relief = {{ $payroll->relief }} </P>
+           
               <label for="exampleInputPassword1">Total Deductions:</label>
             <input type="number" class="form-control" id="exampleInputPassword1" value="{{ $payroll->deductions }}" disabled>
             </div>
@@ -124,7 +118,7 @@
             </div>
       
         </div>
-        <button class="btn btn-success btn-flat float-right btn-lg">Submit</button>
+        <button type="submit" class="btn btn-success btn-flat float-right btn-lg">Submit</button>
       </div>
 </div>
 </form>

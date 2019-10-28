@@ -6,7 +6,7 @@
         <div class="col-12">
           <div class="card mt-2">
             <div class="card-header">
-              <h3 class="card-title">Employee's Payroll</h3>
+              <h3 class="card-title">Employee's Payrolls</h3>
       
       
             </div>
@@ -16,8 +16,8 @@
                 <tr>
                   <th>No</th>
                   <th>Employee Name</th>
-                  <th>Employee Role</th>
-                 {{-- <th>Gross Salary</th>
+                  {{--  <th>Employee Role</th>
+                <th>Gross Salary</th>
                   <th>Deductions</th>
                   <th>Net Salary</th>--}}
                   <th>Action</th>
@@ -26,21 +26,25 @@
                 <tr>
                 <td>{{++$i}}</td>
                   <td>{{ $user->name }}</td>
-                  <td>  
+                {{--  <td>  
                         @if(!empty($user->getRoleNames()))
                     @foreach($user->getRoleNames() as $v)
                        <label class="badge badge-dark badge-flat">{{ $v }}</label>
                     @endforeach
                   @endif
-                </td>
+                </td>--}}
                  {{-- <td>{{ $user->payrolls }}</td>
                   <td>{{ $user->payrolls }}</td>
                   <td>{{ $user->payrolls }}</td>--}}
                   <td>
                       <a class="btn btn-primary btn-flat btn-sm" href="{{ route('payrolls.show',$user->id) }}">Manage salary</a>
-                      <a class="btn btn-info btn-flat btn-sm" href="{{ route('payrolls.edit',$user->id) }}">Edit salary</a>
+                      <a class="btn btn-secondary btn-flat btn-sm" href="{{ route('payrolls.edit',$user->id) }}">Edit salary</a>
+                  <a class="btn btn-light btn-flat btn-sm" href="{{ route('payrolls.payments.index',$user->id) }}">Manage payments</a>
 
-                     {{-- <a class="btn btn-info btn-flat btn-sm" href="{{ route('staff_details.show',$user->id) }}">Profile</a>
+                     {{--
+                                            <a class="btn btn-dark btn-flat btn-sm" href="users/{{$user->id}}/index">Manage payments</a>
+
+                      <a class="btn btn-info btn-flat btn-sm" href="{{ route('staff_details.show',$user->id) }}">Profile</a>
                       <a class="btn btn-primary btn-flat btn-sm" href="{{ route('users.edit',$user->id) }}">Edit</a>
                        {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
                            {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-flat btn-sm']) !!}

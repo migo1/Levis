@@ -18,14 +18,14 @@
       <label  class="col-sm-2 control-label">From</label>
 
       <div class="col-sm-10">
-        <input type="text" class="form-control" name="from" placeholder="start date...">
+        <input type="text" class="form-control" name="from"  id="tarehe">
       </div>
     </div>
     <div class="form-group">
             <label  class="col-sm-2 control-label">To</label>
 
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="to" placeholder="return date">
+              <input type="text" class="form-control" name="to" id="siku">
             </div>
           </div>
           <input type="hidden" name="diff">
@@ -46,3 +46,17 @@
 
 
 </div>
+
+<script type="text/javascript">  
+  $('#tarehe').datepicker({ 
+      autoclose: true,   
+      format: 'yyyy-mm-dd'  
+   });
+</script>
+
+<script type="text/javascript">  
+  $('#siku').datepicker({ 
+      autoclose: true,   
+      format: 'yyyy-mm-dd'  
+   });
+</script>

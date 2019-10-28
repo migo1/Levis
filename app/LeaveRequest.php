@@ -11,6 +11,8 @@ class LeaveRequest extends Model
     protected $fillable = [
         'user_id', 'leave_id', 'from', 'to', 'days_diff', 'reason', 'response', 'reply','remainder'
     ];
+    
+    protected $dates = ['from', 'to'];
 
     public function user() {
         return $this->belongsTo('App\User');
