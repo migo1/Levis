@@ -31,7 +31,7 @@
         <div class="col-md-8">
           <div class="card mt-2">
             <div class="card-header">
-              <h3 class="card-title">Files Table
+              <h3 class="card-title">Files 
                 
                   <button type="button" class="btn btn-success btn-flat btn-sm m-0 float-right" data-toggle="modal" data-target="#create_file">
                       Add New File

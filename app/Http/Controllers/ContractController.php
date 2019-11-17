@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Client;
-use App\Transaction;
+use App\File;
 
-class ClientFileController extends Controller
+class ContractController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,10 +20,7 @@ class ClientFileController extends Controller
      */
     public function index($client_id)
     {
-        $client = Client::find($client_id);
-        $transactions = Transaction::all();
-
-        return view('client_files.index',compact('client','transactions'));
+        return view('contracts.index');
     }
 
     /**
@@ -26,9 +28,12 @@ class ClientFileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($client_id)
     {
-        //
+        //$client = Client::find($id);
+        $files = File::where('client_id', $client_id)->get();
+      // dd($files);
+        return view('contracts.create',compact('client','files'));
     }
 
     /**
@@ -50,7 +55,10 @@ class ClientFileController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = Client::find($id);
+        //   dd($client->files);
+           $transactions = Transaction::all();
+           return view ('contracts.show',compact('client','transactions'));
     }
 
     /**

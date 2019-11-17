@@ -37,6 +37,9 @@ Route::resource('requests', 'LeaveRequestController');
 Route::resource('staff_details', 'StaffDetailController');
 Route::resource('staff_images', 'StaffImageController');
 Route::resource('holidays', 'HolidayController');
+
+Route::resource('clients.files.contracts', 'ContractController');
+
 Route::resource('parties', 'PartyController');
 Route::get('/getParties/{id}', 'MainController@getParties');
 

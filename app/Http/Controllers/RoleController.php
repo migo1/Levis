@@ -50,6 +50,7 @@ class RoleController extends Controller
     public function create()
     {
         $permission = Permission::get();
+        //dd($permission);
         return view('roles.create',compact('permission'));
     }
 
@@ -107,7 +108,7 @@ class RoleController extends Controller
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
 
-
+//dd($rolePermissions);
         return view('roles.edit',compact('role','permission','rolePermissions'));
     }
 

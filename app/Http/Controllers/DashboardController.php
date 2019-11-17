@@ -34,8 +34,12 @@ class DashboardController extends Controller
     {
         $events = [];
         $data = File::all();
-        $holidays = Holiday::whereMonth('holiday_date', '=', date('m'))->whereDay('holiday_date', '=', date('d'))->get();
+       // $holidays = Holiday::whereMonth('holiday_date', '=', date('m'))->whereDay('holiday_date', '=', date('d'))->get();
 
+       $holidays = Holiday::whereRaw('DAYOFYEAR(curdate()) <= DAYOFYEAR(holiday_date) AND DAYOFYEAR(curdate())  >=  dayofyear(holiday_date)');
+    //  ->orderByRaw('DAYOFYEAR(holiday_date)');
+     // $holidays = Holiday::pluck('holiday_date')->toArray();
+//dd($holidays);
         if($data->count()) {
             foreach ($data as $key => $value) {
 
@@ -94,6 +98,7 @@ class DashboardController extends Controller
         $transactions = Transaction::all()->count();
         $leaves = Leave::all();
         $leave_req = Auth::user()->leaveRequests()->orderBy('created_at','desc')->paginate(5);
+     //   $holidays = Holiday::all();
 
         return view('dashboard.index',compact('todays_case','calendar','users','clients','files','transactions','leaves','leave_req'))->with('i', (request()->input('page', 1) - 1) * 5);
     }

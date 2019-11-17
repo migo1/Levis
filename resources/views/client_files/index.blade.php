@@ -73,11 +73,11 @@
           <td>{{ $file->party->name }}</td>
 
             <td>
-            <a class="btn btn-sm btn-flat btn-dark" href="{{ route('clients.contracts.create', $client->id) }}">Smart Contract</a>
+            <a class="btn btn-sm btn-flat btn-dark" href="/clients/{{ $client->id }}/files/{{ $file->id }}/contracts">Smart Contract</a>
 
             <button class="btn btn-primary btn-flat btn-sm" 
 
-            data-myflid="{{ $file->id }}" data-mytrid="{{ $file->transaction}}" data-myptid="{{ $file->party_id}}" data-mycourtday="{{ $file->court_day }}"
+            data-myflid="{{ $file->id }}" data-mytrid="{{ $file->transaction}}" data-mycourtday="{{ $file->court_day }}"
             data-mydescription="{{ $file->description}}" data-myclid="{{ $file->client_id}}" data-myreference="{{ $file->reference}}"
 
             data-toggle="modal" data-target="#edit_file">
@@ -200,7 +200,6 @@
         var button = $(event.relatedTarget) 
         var file_id = button.data('myflid')
         var transaction_id = button.data('mytrid')
-        var party_id = button.data('myptid')
         var court_day = button.data('mycourtday') 
         var description = button.data('mydescription')
         var client_id = button.data('myclid')
@@ -209,7 +208,6 @@
         var modal = $(this)
         modal.find('.modal-body #file_id').val(file_id)
         modal.find('.modal-body #transaction_id').val(transaction_id)
-        modal.find('.modal-body #party_id').val(party_id)
         modal.find('.modal-body #court_day').val(court_day)
         modal.find('.modal-body #description').val(description)
         modal.find('.modal-body #client_id').val(client_id)

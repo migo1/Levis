@@ -7,7 +7,7 @@
         <div class="col-12">
           <div class="card mt-2">
             <div class="card-header">
-              <h3 class="card-title">Case Types<button class="btn btn-success btn-flat btn-sm m-0 float-right" data-toggle="modal" data-target="#add_case">Create New Case Type</button></h3>
+              <h3 class="card-title">Case Types<button class="btn btn-success btn-flat btn-sm m-0 float-right" data-toggle="modal" data-target="#add_case">Add New Case Type</button></h3>
       
       
             </div>
@@ -27,6 +27,7 @@
 
             <td>
                 <a class="btn btn-primary btn-flat btn-sm" href="/transactions/{{$transaction->id}}">View</a>
+                <button></button>
             <a class="btn btn-primary btn-flat btn-sm" href="/transactions/{{$transaction->id}}/edit">Edit</a>
                  {!! Form::open(['method' => 'DELETE','route' => ['transactions.destroy', $transaction->id],'style'=>'display:inline']) !!}
                      {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-flat btn-sm']) !!}
@@ -50,7 +51,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Holiday</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Case Type</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

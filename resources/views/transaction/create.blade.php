@@ -14,8 +14,8 @@
             {{ csrf_field()}}--}}
           <div class="card-body">
             <div class="form-group">
-              <label for="exampleInputEmail1">Type Of Transaction</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" name="name" placeholder="Enter transaction">
+              <label for="exampleInputEmail1">Case Type</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" name="name" placeholder="">
             </div>
 
           </div>

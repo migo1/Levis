@@ -79,7 +79,7 @@
           <th>Leave Type</th>
           <th>Leave Date</th>
           <th>Return Date</th>
-          <th>Days</th>
+          <th>Remaining days</th>
           <th>Reason</th>
           <th>Respond</th>
           <th>Reply</th>
@@ -92,7 +92,7 @@
           <td>{{ $leave_requests->leave->leave_type }}</td>
           <td>{{ $leave_requests->from }}</td>
           <td>{{ $leave_requests->to}}</td>
-          <td>{{ $leave_requests->days_diff }}</td>
+          <td>{{ $leave_requests->remainder }}</td>
           <td>{{ $leave_requests->reason}}</td>
           @if($leave_requests->response == 'Approved')
           <td><span class="label label-success"><strong>{{$leave_requests->response}}</strong></span></td>

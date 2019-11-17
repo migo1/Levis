@@ -6,7 +6,7 @@
     <div class="col-12">
       <div class="card mt-2">
         <div class="card-header">
-          <h3 class="card-title">Client's Table
+          <h3 class="card-title">Clients
             <button type="button" class="btn btn-success btn-flat btn-sm m-0 float-right" data-toggle="modal" data-target="#create">
             Add New Client
           </button></h3>
@@ -30,7 +30,7 @@
         <td>{{ $client->email }}</td>
         <td>{{$client->mobile_no}}</td>
         <td>
-        <a class="btn btn-info btn-flat btn-sm" href="/clients/{{$client->id}}">Client's Page</a>
+        <a class="btn btn-info btn-flat btn-sm" href="{{ route('clients.files.index',$client->id) }}">Client's files</a>
             <button class="btn btn-primary btn-flat btn-sm"
       data-myclid="{{$client->id}}"  data-myuuid="{{ $client->uuid}}" data-myname="{{ $client->name }}" 
         data-myemail="{{ $client->email }}" data-mymobile="{{$client->mobile_no}}"
